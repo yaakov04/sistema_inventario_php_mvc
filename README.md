@@ -10,7 +10,6 @@ Caracteristicas del sistema de inventario:
 El registro de producto debera contar con los campos:
 +Nombre del producto
 +Proveedor
-+codigo
 +Descripcion
 +Precio
 +Stock
