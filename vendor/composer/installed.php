@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'b82ae9125302f2621c0e93e1d2c2474691732c3b',
+    'reference' => '95d5195df67202078a2da6b80d7791f23b8081ba',
     'name' => 'yaakov04/sistema_inventario_php_mvc',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'b82ae9125302f2621c0e93e1d2c2474691732c3b',
+      'reference' => '95d5195df67202078a2da6b80d7791f23b8081ba',
     ),
   ),
 );

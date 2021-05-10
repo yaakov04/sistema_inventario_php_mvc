@@ -11,7 +11,6 @@ class Router{
     public function get($url, $fn){
         $this->rutasGET[$url]=$fn;
     }
-
     public function comprobarRutas(){
        
         $url=isset($_GET['url'])?$_GET['url']:null;
