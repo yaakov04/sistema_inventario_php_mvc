@@ -10,5 +10,6 @@ use Controllers\Main;
 
 $router= new Router();
 $router->get('/', [Main::class,'main']);
-$router->get('/registrar', [Main::class,'registrar_producto']);
+$router->get('/agregar', [Main::class,'agregar']);
+$router->post('/agregar', [Main::class,'agregar']);
 $router->comprobarRutas();
