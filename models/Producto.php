@@ -3,9 +3,22 @@ namespace Model;
 
 class Producto {
     protected static $db;
-    public function __construct(public string $nombre='',public string $proveedor='',public string $descripcion='', public float $precio=0.0,public int $stock=0, public string $fecha_registro='', public string $editado=''){
+    public function __construct(public int $id=0 ,public string $nombre_producto='',public string $proveedor='',public string $descripcion='', public float $precio=0.0,public int $stock=0, public string $fecha_registro='', public string $editado=''){
 
     }//
+
+    public function setProducto($args=array()){
+        $this->nombre_producto=$args['nombre_producto'];
+        $this->proveedor=$args['proveedor'];
+        $this->descripcion=$args['descripcion'];
+        $this->precio=floatval($args['precio']);
+        $this->stock= intval($args['stock']);
+    }
+
+    public function agregar(){
+        $query = "INSERT INTO inventario (nombre_producto, proveedor, descripcion, precio, stock) VALUES ('$this->nombre_producto', '$this->proveedor', '$this->descripcion', '$this->precio', $this->stock)";
+        self::$db->query($query);
+    }
 
     public static function setDB($database){
         self::$db=$database;
