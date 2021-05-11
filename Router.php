@@ -11,8 +11,12 @@ class Router{
     public function get($url, $fn){
         $this->rutasGET[$url]=$fn;
     }
+    public function post($url, $fn){
+        $this->rutasPOST[$url]=$fn;
+    }
     public function comprobarRutas(){
        
+        //obteniendo url
         $url=isset($_GET['url'])?$_GET['url']:null;
 
         if(!($url===null)){
@@ -20,13 +24,15 @@ class Router{
         }
        
         $urlActual= $url?? '/';
-        
+
+        //obteniendo metodo
         $metodo = $_SERVER['REQUEST_METHOD'];
 
 
         if($metodo==='GET'){
             $fn = $this->rutasGET[$urlActual]?? null;
-            
+        }else{
+            $fn = $this->rutasPOST[$urlActual]?? null;
         }
         if($fn){
             
