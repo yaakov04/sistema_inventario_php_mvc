@@ -12,17 +12,21 @@
                 </tr>
             </thead>
             <tbody>
+            <?php foreach($productos as $producto){?>
+             
                 <tr>
-                    <td>Cafetera Expresso</td>
-                    <td>T-fal</td>
-                    <td>Maquina para Expressos</td>
-                    <td>$2,780.00</td>
-                    <td>10</td>
+                    <td> <?php echo $producto->nombre_producto; ?></td>
+                    <td><?php echo $producto->proveedor; ?></td>
+                    <td> <?php echo $producto->descripcion; ?> </td>
+                    <td><?php echo $producto->precio; ?></td>
+                    <td><?php echo $producto->stock; ?></td>
                     <td>
                         <button type="button" class="btn btn-primary">Editar</button>
                         <button type="button" class="btn btn-danger">Eliminar</button>
                     </td>
                 </tr>
+             <?php }// ?>
+                
             </tbody>
         </table>
     </main>

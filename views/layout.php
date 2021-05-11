@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
     <title>Sistema de inventario</title>
 </head>
 
@@ -19,7 +19,7 @@
                 <h1>Inventarios</h1>
             </a>
             <div class="d-flex flex-row">
-                <button type="button" class="btn btn-success me-2">Agregar +</button>
+                <a href="<?php URL ?>agregar" type="button" class="btn btn-success me-2">Agregar +</a>
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-dark" type="submit">Buscar</button>
