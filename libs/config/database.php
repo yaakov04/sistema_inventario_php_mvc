@@ -1,6 +1,6 @@
 <?php
 function database() : mysqli{
-    $database = new mysqli('localhost', 'root', '123456', 'sistema_inventario');
+    $database = new mysqli(HOST, USER, PASSWORD, DB);
     if(!$database){
         echo 'no se pudo conectar';
         exit;
