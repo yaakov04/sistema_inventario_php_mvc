@@ -10,15 +10,22 @@ class Main{
 
     public static function main(Router $router){
         $productos = Producto::all();
-        bichos($productos);
+        //bichos($productos);
         $datos= array(
-            'mensaje' => 'pasando datos',
+            'productos' => $productos,
             'color'=>'rojo'
         );
         $router->render('main/index', $datos);
     }
 
-    public static function registrar_producto(){
-        echo '<br>Registrando Producto';
+    public static function agregar(Router $router){
+        $datos=array();
+        if ($_SERVER['REQUEST_METHOD']==='POST') {
+            $producto = new Producto();
+            //$producto->nombre_producto=$_POST['nombre_producto'];
+            $producto->setProducto($_POST);
+            $producto->agregar();
+        }
+        $router->render('main/agregar', $datos);
     }
 }//class
