@@ -3,6 +3,7 @@ namespace Model;
 
 class Producto {
     protected static $db;
+    protected static $columnasDB = array('id','nombre_producto', 'proveedor','descripcion','precio','stock','fecha_registro','editado');
     public function __construct(public int $id=0 ,public string $nombre_producto='',public string $proveedor='',public string $descripcion='', public float $precio=0.0,public int $stock=0, public string $fecha_registro='', public string $editado=''){
 
     }//
@@ -16,8 +17,30 @@ class Producto {
     }
 
     public function agregar(){
-        $query = "INSERT INTO inventario (nombre_producto, proveedor, descripcion, precio, stock) VALUES ('$this->nombre_producto', '$this->proveedor', '$this->descripcion', '$this->precio', $this->stock)";
-        self::$db->query($query);
+        $atributos=$this->sanitizarAtributos();
+        $query = " INSERT INTO inventario ( ";
+        $query .= join(', ', array_keys($atributos));
+        $query .= " ) VALUES ( ' ";
+        $query .= join("', '", array_values($atributos));
+        $query .= " ') ";
+        $resultado = self::$db->query($query);
+        bichos($resultado);
+    }
+    public function atributos(){
+        $atributos = array();
+        foreach(self::$columnasDB as $columna){
+            if($columna==='id'||$columna==='fecha_registro'||$columna==='editado') continue;
+            $atributos[$columna]= $this->$columna;
+        }
+        return $atributos;
+    }
+    public function sanitizarAtributos(){  
+        $atributos = $this->atributos();
+        $sanitizado = array();
+        foreach($atributos as $key => $value){
+            $sanitizado[$key]=self::$db->escape_string($value);
+        }
+        return $sanitizado;
     }
 
     public static function setDB($database){
