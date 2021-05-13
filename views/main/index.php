@@ -1,6 +1,7 @@
 
     <main class="container-md mt-4">
-        <table class="table border shadow align-middle">
+        <?php echo $mensaje ? $mensaje : ''; ?>
+        <table class="table border shadow align-middle" style="table-layout: fixed;">
             <thead class="table-dark">
                 <tr>
                     <th>Nombre</th>
@@ -17,7 +18,7 @@
                 <tr>
                     <td> <?php echo $producto->nombre_producto; ?></td>
                     <td><?php echo $producto->proveedor; ?></td>
-                    <td> <?php echo $producto->descripcion; ?> </td>
+                    <td class="text-wrap" style="word-wrap:break-word"> <?php echo $producto->descripcion; ?> </td>
                     <td><?php echo $producto->precio; ?></td>
                     <td><?php echo $producto->stock; ?></td>
                     <td>
