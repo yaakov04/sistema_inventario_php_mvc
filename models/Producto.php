@@ -4,7 +4,9 @@ namespace Model;
 class Producto {
     protected static $db;
     protected static $columnasDB = array('id','nombre_producto', 'proveedor','descripcion','precio','stock','fecha_registro','editado');
+    protected static $errores = array();
     public function __construct(public int $id=0 ,public string $nombre_producto='',public string $proveedor='',public string $descripcion='', public float $precio=0.0,public int $stock=0, public string $fecha_registro='', public string $editado=''){
+
 
     }//
 
@@ -24,7 +26,7 @@ class Producto {
         $query .= join("', '", array_values($atributos));
         $query .= " ') ";
         $resultado = self::$db->query($query);
-        bichos($resultado);
+        return $resultado;
     }
     public function atributos(){
         $atributos = array();
@@ -72,5 +74,25 @@ class Producto {
         }
         return $objeto;
     }
-    
+    public static function getErrores(){
+        return self::$errores;
+    }
+    public function validar(){
+        if (!$this->nombre_producto) {
+            self::$errores[]='El nombre es obligatorio';
+        }
+        if (!$this->proveedor) {
+            self::$errores[]='El proveedor es obligatorio';
+        }
+        if (strlen($this->descripcion)<80) {
+            self::$errores[]='La descripcion es obligatoria y debe tener al menos 80 caracteres';
+        }
+        if (!$this->precio) {
+            self::$errores[]='El precio es obligatorio';
+        }
+        if (!$this->stock) {
+            self::$errores[]='El stock es obligatorio';
+        }
+        return self::$errores;
+    }
 }//class
