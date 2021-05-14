@@ -18,6 +18,53 @@ class Producto {
         $this->stock= intval($args['stock']);
     }
 
+    public static function setDB($database){
+        self::$db=$database;
+    }
+
+    public static function all(){
+        $query = "SELECT * FROM  inventario ";
+        $consulta=self::consultarSQL($query);
+        return $consulta;
+    }
+
+    public static function find($id){
+        $query= "SELECT * FROM inventario WHERE id = ${id}";
+        $consulta = self::consultarSQL($query);
+        return array_shift($consulta);
+    }
+
+    public static function consultarSQL($query){
+        $resultado = self::$db->query($query);
+        $array=array();
+        while($resgistro = $resultado->fetch_assoc()){
+            $array[]=self::crearObjeto($resgistro);
+        }
+        $resultado->free();
+        return $array;
+    }
+
+    protected static function crearObjeto($resgistro){
+        $objeto = new self;
+        foreach($resgistro as $key=>$value){
+            if(property_exists($objeto, $key)){
+                $objeto->$key=$value;
+            }
+        }
+        return $objeto;
+    }
+    public static function getErrores(){
+        return self::$errores;
+    }  
+
+    public function guardar(){
+        if (isset($this->id) && $this->id > 0) {
+           return $this->editar();
+        }else{
+            return $this->agregar();
+        }
+    }//
+
     public function agregar(){
         $atributos=$this->sanitizarAtributos();
         $query = " INSERT INTO inventario ( ";
@@ -45,38 +92,6 @@ class Producto {
         return $sanitizado;
     }
 
-    public static function setDB($database){
-        self::$db=$database;
-    }
-
-    public static function all(){
-        $query = "SELECT * FROM  inventario ";
-        $consulta=self::consultarSQL($query);
-        return $consulta;
-    }
-
-    public static function consultarSQL($query){
-        $resultado = self::$db->query($query);
-        $array=array();
-        while($resgistro = $resultado->fetch_assoc()){
-            $array[]=self::crearObjeto($resgistro);
-        }
-        $resultado->free();
-        return $array;
-    }
-
-    protected static function crearObjeto($resgistro){
-        $objeto = new self;
-        foreach($resgistro as $key=>$value){
-            if(property_exists($objeto, $key)){
-                $objeto->$key=$value;
-            }
-        }
-        return $objeto;
-    }
-    public static function getErrores(){
-        return self::$errores;
-    }
     public function validar(){
         if (!$this->nombre_producto) {
             self::$errores[]='El nombre es obligatorio';
@@ -94,5 +109,32 @@ class Producto {
             self::$errores[]='El stock es obligatorio';
         }
         return self::$errores;
+    }//
+    public function sincronizar(array $args){
+        foreach($args as $key => $value){
+            if(property_exists($this, $key) && !is_null($value)){
+                $this->$key = $value;
+            }
+        }
+    }//
+    public function editar(){
+        $atributos = $this->sanitizarAtributos();
+        $valores = array();
+        foreach($atributos as $key => $value){
+            $valores[]= "{$key} = '{$value}'";
+        }
+        $query =" UPDATE inventario SET ";
+        $query .= join(', ', $valores);
+        $query .= ", editado = NOW() ";
+        $query .= " WHERE id = '".self::$db->escape_string($this->id)."' ";
+        $query .= " LIMIT 1 ";
+        $resultado = self::$db->query($query);
+        return $resultado;
     }
+    public function eliminar(){
+        $query = "DELETE FROM inventario WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1";
+        $resultado = self::$db->query($query);
+        return $resultado;
+    }
+    
 }//class

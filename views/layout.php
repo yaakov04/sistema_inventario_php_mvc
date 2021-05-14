@@ -15,7 +15,7 @@
 <body>
     <header class="navbar navbar-dark bg-primary sticky-top">
         <div class="container-md">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="<?php echo URL; ?>">
                 <h1>Inventarios</h1>
             </a>
             <div class="d-flex flex-row">

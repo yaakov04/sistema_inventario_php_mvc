@@ -7,9 +7,11 @@
           </div>
         <?php } ?>
             <form class="border p-3 rounded shadow" action="<?php echo URL ?>agregar" method="POST">
-              <?php  include 'formulario.php' ?>
-              <button type="submit" class="btn btn-primary">Agregar</button>
-
+              <fieldset>
+                <legend class="mb-4">Agregar un producto</legend>
+                <?php  include 'formulario.php' ?>
+                <button type="submit" class="btn btn-primary">Agregar</button>
+              </fieldset>
             </form>
         </div>
     </main>
